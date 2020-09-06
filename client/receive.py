@@ -20,6 +20,7 @@ class Receive(threading.Thread):
 
             if data.get("status") != "ok":
                 print(data["status"])
+                continue
 
             command_id = data.get("command_id")
 
@@ -52,7 +53,7 @@ class Receive(threading.Thread):
         self.client.rooms[room] = nick
 
         print(f'You successfully subscribe on {room}')
-        print(f'\nAll messages in room :\n')
+        print(f'\nAll messages in room :')
         for message in messages:
             print(message)
 
@@ -65,9 +66,9 @@ class Receive(threading.Thread):
 
     def get_messages_from_room(self, data):
         messages = data["data"]["messages"]
-        room = data["data"]["messages"]
+        room = data["data"]["room_name"]
 
-        print(f'\nAll messages in room {room}:\n')
+        print(f'\nAll messages in room {room}:')
 
         for message in messages:
             print(message)

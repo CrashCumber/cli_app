@@ -14,10 +14,14 @@ class ConnSocket(threading.Thread):
             data = self.client_conn.recv(1024).decode()
 
             if data:
-                print(data)
                 data = json.loads(data)
 
                 if not data.get("command_id", False):
+                    data = {"status": "Invalid request data"}
+                    data = json.dumps(data)
+                    data = data.encode()
+
+                    self.client_conn.sendall(data)
                     continue
 
                 command_id = data["command_id"]
@@ -104,7 +108,7 @@ class ConnSocket(threading.Thread):
     def send_message_in_room(self, data):
         room = data.get("data").get("room_name")
         nick = data.get("data").get("nick")
-        message = data["data"]["message"]
+        message = data.get("data").get("message")
 
         status = "Invalid request data"
 
@@ -140,7 +144,7 @@ class ConnSocket(threading.Thread):
 
         for room_ in self.server.rooms:
             if room == room_["name"]:
-                if nick not in room_["clients"]:
+                if nick in room_["clients"]:
                     messages = room_["messages"]
                     status = "ok"
                 else:
@@ -160,14 +164,3 @@ class ConnSocket(threading.Thread):
         data = data.encode()
 
         self.client_conn.sendall(data)
-
-    # def send(self, message, room):
-    #     data = {"command_id": 3,
-    #             "data": {"room_name": room,
-    #                      "message": message}
-    #             }
-    #
-    #     data = json.dumps(data)
-    #     data = data.encode()
-    #
-    #     self.client_conn.sendall(data)

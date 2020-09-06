@@ -66,8 +66,9 @@ class Send(threading.Thread):
             return
 
         data = {
-                "command_id": 1,
-                "data": {"room_name": room}
+                "command_id": 4,
+                "data": {"room_name": room,
+                         "nick": self.client.rooms.get(room)}
                 }
 
         data = json.dumps(data)
@@ -99,7 +100,7 @@ class Send(threading.Thread):
     def unsubscribe(self):
         room = input('Input room name: ')
 
-        if self.client.rooms.get(room, False):
+        if not self.client.rooms.get(room, False):
             print('You don`t subscribed on this room')
             return
 

@@ -7,7 +7,7 @@ ROOMS = [
      },
     {
         "name": "cinema",
-        "clients": [],
+        "clients": ["test_nick_for_send", "test_nick_for_unsub"],
         "messages": [],
         "number": 0
     },
