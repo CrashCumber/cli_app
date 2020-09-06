@@ -25,6 +25,9 @@ class InvalidData:
 
 
 class TestGetInformation(Base):
+    """
+        Тестирование получения списка комнат и сообщений из комнаты.
+    """
 
     def test_get_list_rooms(self):
         data = {"command_id": 1}

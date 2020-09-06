@@ -8,6 +8,12 @@ from server import Server
 
 @pytest.fixture(scope='session')
 def config():
+    """
+        Запуск сервера.
+        Создание тестового сокета клиента
+        Возвращение слиента в тесты
+        По завершении - выключение сервера
+    """
     host = "localhost"
     port = 1060
 

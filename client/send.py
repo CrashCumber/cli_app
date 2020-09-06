@@ -7,7 +7,7 @@ COMMANDS = """
 1. Get list of rooms
 2. Subscribe to room
 3. Send message in room
-4. Get all message of room
+4. Get all messages of room
 5. Show all subscriptions
 6. Unsubscribe from room
 7. All messages

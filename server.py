@@ -58,7 +58,6 @@ class BindClient(threading.Thread):
         Коммуникация с каждым отдельным клиентам.
         Прием и управление запросами пользователя.
     """
-
     def __init__(self, client_conn, addr, server):
         super().__init__()
         self.client_conn = client_conn
@@ -123,7 +122,7 @@ class BindClient(threading.Thread):
 
     def subscribe(self, data):
         """
-            Добавление пользователя в определенную комнату
+            Добавление пользователя в комнату
         :param data:   {
                         "command_id" : 2,
                         "data" : {"room_name": "..."
@@ -186,6 +185,7 @@ class BindClient(threading.Thread):
         """
         room = data.get("data").get("room_name")
         nick = data.get("data").get("nick")
+
         status = "Invalid request data"
 
         for room_ in self.server.rooms:
@@ -207,7 +207,7 @@ class BindClient(threading.Thread):
 
     def send_message_in_room(self, data):
         """
-            Отправка сообщения  пользователя в определенную комнату
+            Отправка сообщения пользователя в комнату
         :param data:   {
                         "command_id" : 2,
                         "data" : {"room_name": "..."
@@ -222,11 +222,11 @@ class BindClient(threading.Thread):
         room = data.get("data").get("room_name")
         nick = data.get("data").get("nick")
         message = data.get("data").get("message")
+
         status = "Invalid request data"
 
-        if sys.getsizeof(message) > 256:
+        if sys.getsizeof(message) > 254:
             status = "It is too large"
-
         else:
             if message:
                 for room_ in self.server.rooms:
@@ -254,7 +254,7 @@ class BindClient(threading.Thread):
 
     def get_messages_from_room(self, data):
         """
-            Получение сообщениц отпредененной комнаты
+            Получение сообщения определенной комнаты
         :param data:   {
                         "command_id" : 2,
                         "data" : {"room_name": "..."
@@ -273,6 +273,7 @@ class BindClient(threading.Thread):
         room = data.get("data").get("room_name")
         nick = data.get("data").get("nick")
         messages = []
+
         status = "Invalid request data"
 
         for room_ in self.server.rooms:
@@ -305,10 +306,8 @@ def exit(server):
     while True:
         ipt = input('')
         if ipt == 'q':
-            print('Close all connections')
             for connection in server.client_connections:
                 connection.client_conn.close()
-            print('Shut down the server')
             os._exit(0)
 
 

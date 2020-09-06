@@ -45,6 +45,9 @@ class InvalidData:
 
 
 class TestSend(Base):
+    """
+        Тестирование отправки сообщения серверу
+    """
 
     def test_send_message(self):
         room = ROOMS[1]["name"]

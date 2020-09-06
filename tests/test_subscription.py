@@ -6,6 +6,9 @@ from tests.base import Base
 
 
 class TestSubscription(Base):
+    """
+        Тестирование подписки и отписки пользователя.
+    """
 
     def test_subscribe(self):
         room = ROOMS[1]["name"]
