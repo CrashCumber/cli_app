@@ -17,6 +17,9 @@ COMMANDS = """
 
 
 class Send(threading.Thread):
+    """
+        Поток отправлки сообщений пользователя на сервер
+    """
     def __init__(self, sock, name, client):
         super().__init__()
         self.sock = sock
@@ -24,6 +27,10 @@ class Send(threading.Thread):
         self.client = client
 
     def run(self):
+        """
+            Прием вводв пользователя.
+            Перенаправление данных на необходимые методы.
+        """
         while True:
             sleep(0.5)
             print(COMMANDS)
@@ -50,6 +57,10 @@ class Send(threading.Thread):
                 print('You type something strange:( \nTry again')
 
     def get_rooms_list(self):
+        """
+            Отправка запроса на получение всех комнат на сервере
+            :return :  {"command_id": 1}
+        """
         data = {"command_id": 1}
 
         data = json.dumps(data)
@@ -58,6 +69,14 @@ class Send(threading.Thread):
         self.sock.sendall(data)
 
     def get_message_from_room(self, room=None):
+        """
+            Отправка запроса на получение всех сообщений из комнаты
+            :return: {
+                "command_id": 4,
+                "data": {"room_name": "...",
+                         "nick": self.client.rooms.get(room)}
+                }
+        """
         if room is None:
             room = input('Input room name: ')
 
@@ -77,6 +96,16 @@ class Send(threading.Thread):
         self.sock.sendall(data)
 
     def subscribe(self):
+        """
+            Отправка запроса на подписку а комнату
+            :return {
+                "command_id": 2,
+                "data": {
+                         "room_name": "...",
+                         "nick": "..."
+                         }
+                }
+        """
         room = input('Input room name: ')
         nick = input('Input your nick in this room: ')
 
@@ -98,6 +127,16 @@ class Send(threading.Thread):
         self.sock.sendall(data)
 
     def unsubscribe(self):
+        """
+            Отправка запроса на отподписку от комнату
+            :return {
+                "command_id": 6,
+                "data": {
+                         "room_name": "...",
+                         "nick": "..."
+                         }
+                }
+        """
         room = input('Input room name: ')
 
         if not self.client.rooms.get(room, False):
@@ -119,6 +158,15 @@ class Send(threading.Thread):
         self.sock.sendall(data)
 
     def send_message_in_room(self):
+        """
+            Отправка сообщения в комнату
+            :return {
+                "command_id": 3,
+                "data": {"room_name": room,
+                         "nick": nick,
+                         "message": message}
+                }
+        """
         room = input('Input room name: ')
         message = input('Message: ')
 
@@ -145,11 +193,19 @@ class Send(threading.Thread):
         self.sock.sendall(data)
 
     def get_all_subscribes(self):
+        """
+            Информация о всех подписоках
+            Информация берется со стороны клиента и с сервером не взаимодействует
+        """
         print('Your subscribes:\n')
 
         for room in self.client.rooms:
             print(room)
 
     def all_messages(self):
+        """
+            Вывод все сообщений всех подписанных комнат
+            Используется метод для получения всех комнат и инфромация о подписках на стороне клиента
+        """
         for room in self.client.rooms:
             self.get_message_from_room(room)

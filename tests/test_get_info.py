@@ -1,6 +1,6 @@
 import json
 import pytest
-from room_config import ROOMS
+from config import ROOMS
 from tests.base import Base
 
 
@@ -24,10 +24,8 @@ class InvalidData:
     }
 
 
-@pytest.mark.skip()
 class TestGetInformation(Base):
 
-    @pytest.mark.skip()
     def test_get_list_rooms(self):
         data = {"command_id": 1}
 
@@ -52,7 +50,7 @@ class TestGetInformation(Base):
 
     def test_get_messages(self):
         room = ROOMS[1]["name"]
-        nick = "test_nick"
+        nick = "test_nick_for_get"
 
         # self.subscribe(room, nick)
 

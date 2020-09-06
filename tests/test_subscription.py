@@ -1,5 +1,7 @@
 import json
-from room_config import ROOMS
+from time import sleep
+
+from config import ROOMS
 from tests.base import Base
 
 

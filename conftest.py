@@ -2,9 +2,11 @@ import os
 import socket
 from time import sleep
 import pytest
+# sys.path.append(os.path.dirname(os.path.dirname(os.path.realpath(__file__))))
 
-from room_config import ROOMS
-from server.server import Server
+
+from config import ROOMS
+from server import Server
 
 
 @pytest.fixture(scope='session')

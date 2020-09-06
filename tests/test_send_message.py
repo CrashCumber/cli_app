@@ -1,6 +1,6 @@
 import json
 import pytest
-from room_config import ROOMS
+from config import ROOMS
 from tests.base import Base
 
 
