@@ -10,7 +10,7 @@ class Client:
         self.port = port
         self.sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         self.name = None
-        self.rooms = []
+        self.rooms = {}
 
     def start(self):
         self.sock.connect((self.host, self.port))

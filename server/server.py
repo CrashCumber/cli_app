@@ -1,29 +1,9 @@
 import threading
 import socket
 import argparse
-from server_client_connection import ConnSocket
 
-
-ROOMS = [
-    {
-        "name": "gym",
-        "clients": [],
-        "messages": [],
-        "number": 0
-     },
-    {
-        "name": "cinema",
-        "clients": [],
-        "messages": [],
-        "number": 0
-    },
-    {
-        "name": "school",
-        "clients": [],
-        "messages": [],
-        "number": 0
-    },
-]
+from server.room_config import ROOMS
+from server.server_client_connection import ConnSocket
 
 
 class Server(threading.Thread):
@@ -55,6 +35,7 @@ class Server(threading.Thread):
         for room_ in self.rooms:
             if room == room_["name"]:
                 room_["messages"].append(message)
+                room_["number"] += 1
                 break
 
 
