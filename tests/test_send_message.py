@@ -35,6 +35,13 @@ class InvalidData:
             "nick": "test_nick_for_send",
             "message": "message"}
     }
+    data6 = {
+        "command_id": 3,
+        "data": {
+            "room_name": ROOMS[1]["name"],
+            "nick": "test_nick_for_send",
+            "message": ''.join(['s' for i in range(256)])}
+    }
 
 
 class TestSend(Base):
@@ -57,7 +64,7 @@ class TestSend(Base):
 
         self.client.sendall(data)
 
-        response = self.client.recv(5000).decode()
+        response = self.client.recv(1024).decode()
         data = json.loads(response)
 
         assert data.get("status") == "ok", data
@@ -82,20 +89,20 @@ class TestSend(Base):
 
         self.client.sendall(data)
 
-        response = self.client.recv(5000).decode()
+        response = self.client.recv(1024).decode()
         data = json.loads(response)
 
         assert data.get("status") != "ok", data
         assert message in ROOMS[1]["messages"], data
 
-    @pytest.mark.parametrize('data', [InvalidData.data1, InvalidData.data2, InvalidData.data3, InvalidData.data4, InvalidData.data5])
+    @pytest.mark.parametrize('data', [InvalidData.data1, InvalidData.data2, InvalidData.data3, InvalidData.data4, InvalidData.data5, InvalidData.data6])
     def test_send_message_invalid_data(self, data):
         data = json.dumps(data)
         data = data.encode()
 
         self.client.sendall(data)
 
-        response = self.client.recv(5000).decode()
+        response = self.client.recv(1024).decode()
         data = json.loads(response)
 
         assert data.get("status") != "ok", data

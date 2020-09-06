@@ -34,7 +34,7 @@ class TestGetInformation(Base):
 
         self.client.send(data)
 
-        response = self.client.recv(5000).decode()
+        response = self.client.recv(1024).decode()
         data = json.loads(response)
 
         assert data.get("status") == "ok"
@@ -52,8 +52,6 @@ class TestGetInformation(Base):
         room = ROOMS[1]["name"]
         nick = "test_nick_for_get"
 
-        # self.subscribe(room, nick)
-
         data = {
             "command_id": 4,
             "data": {"room_name": room,
@@ -66,7 +64,7 @@ class TestGetInformation(Base):
 
         self.client.sendall(data)
 
-        response = self.client.recv(1024).decode()
+        response = self.client.recv(3000).decode()
         data = json.loads(response)
 
         assert data.get("status") == "ok", data
@@ -101,7 +99,7 @@ class TestGetInformation(Base):
 
         self.client.sendall(data)
 
-        response = self.client.recv(5000).decode()
+        response = self.client.recv(1024).decode()
         data = json.loads(response)
 
         assert data.get("status") != "ok", data

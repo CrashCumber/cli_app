@@ -1,5 +1,6 @@
 import json
 import os
+import sys
 import threading
 import socket
 from config import ROOMS
@@ -221,22 +222,25 @@ class BindClient(threading.Thread):
         room = data.get("data").get("room_name")
         nick = data.get("data").get("nick")
         message = data.get("data").get("message")
-
         status = "Invalid request data"
 
-        if message:
-            for room_ in self.server.rooms:
-                if room == room_["name"]:
-                    if nick in room_["clients"]:
-                        if room_["number"] >= 128:
-                            status = 'In room a lot of messages. You can`t add more.'
-                            break
-                        room_["messages"].append(message)
-                        room_["number"] += 1
-                        status = "ok"
-                    else:
-                        status = "You unsubscribe on this room"
-                    break
+        if sys.getsizeof(message) > 256:
+            status = "It is too large"
+
+        else:
+            if message:
+                for room_ in self.server.rooms:
+                    if room == room_["name"]:
+                        if nick in room_["clients"]:
+                            if room_["number"] >= 128:
+                                status = 'In room a lot of messages. You can`t add more.'
+                                break
+                            room_["messages"].append(message)
+                            room_["number"] += 1
+                            status = "ok"
+                        else:
+                            status = "You unsubscribe on this room"
+                        break
 
         data = {
             "command_id": 3,
@@ -279,7 +283,6 @@ class BindClient(threading.Thread):
                 else:
                     status = "You unsubscribe on this room"
                 break
-
 
         data = {"command_id": 4,
                 "data": {

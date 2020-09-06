@@ -51,7 +51,7 @@ class Receive(threading.Thread):
         """
             Вывод все доспутных на сервере комнат
         """
-        print('\nAll rooms:')
+        print('All rooms:')
 
         rooms = data["data"]["rooms"]
         for room in rooms:
@@ -67,8 +67,8 @@ class Receive(threading.Thread):
 
         self.client.rooms[room] = nick
 
-        print(f'You successfully subscribe on {room}')
-        print(f'\nAll messages in room :')
+        print(f'You have successfully unsubscribed on {room}')
+        print(f'All messages in room :')
         for message in messages:
             print(message)
 
@@ -80,7 +80,7 @@ class Receive(threading.Thread):
 
         self.client.rooms.pop(room)
 
-        print(f'You successfully unsubscribe on {room}')
+        print(f'You have successfully unsubscribed from {room}')
 
     def get_messages_from_room(self, data):
         """
@@ -89,7 +89,7 @@ class Receive(threading.Thread):
         messages = data["data"]["messages"]
         room = data.get("data").get("room_name")
 
-        print(f'\nAll messages in room {room}:')
+        print(f'All messages in room {room}:')
 
         for message in messages:
             print(message)

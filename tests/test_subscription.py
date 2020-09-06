@@ -24,7 +24,7 @@ class TestSubscription(Base):
 
         self.client.sendall(data)
 
-        response = self.client.recv(5000).decode()
+        response = self.client.recv(1024).decode()
         data = json.loads(response)
 
         assert data.get("status") == "ok"
@@ -55,7 +55,7 @@ class TestSubscription(Base):
 
         self.client.sendall(data)
 
-        response = self.client.recv(5000).decode()
+        response = self.client.recv(1024).decode()
         data = json.loads(response)
 
         assert data.get("status", False) == 'ok', data

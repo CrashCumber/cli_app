@@ -1,16 +1,15 @@
 import json
 import threading
 import os
-import sys
 from time import sleep
 
 COMMANDS = """
 1. Get list of rooms
-2. Subscribe
+2. Subscribe to room
 3. Send message in room
-4. Get all message one room
-5. Show all subscribes
-6. Unsubscribe
+4. Get all message of room
+5. Show all subscriptions
+6. Unsubscribe from room
 7. All messages
 8. Exit
 """
@@ -175,10 +174,6 @@ class Send(threading.Thread):
             return
 
         nick = self.client.rooms.get(room, False)
-
-        if sys.getsizeof(message) > 256:
-            print("It is too large( \n")
-            return
 
         data = {
                 "command_id": 3,
