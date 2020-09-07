@@ -13,7 +13,7 @@ ROOMS = [
     },
     {
         "name": "school",
-        "clients": (),
+        "clients": [],
         "messages": [],
         "number": 0
     },

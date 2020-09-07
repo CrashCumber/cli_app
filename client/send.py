@@ -10,7 +10,7 @@ COMMANDS = """
 4. Get all messages of room
 5. Show all subscriptions
 6. Unsubscribe from room
-7. All messages
+7. All messages from all subscriptions
 8. Exit
 """
 
